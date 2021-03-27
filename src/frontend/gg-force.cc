@@ -60,6 +60,7 @@ void usage( const char * argv0 )
        << "  - remote  Executes the jobs on a remote machine" << endl
        << "  - meow    Executes the jobs on AWS Lambda with long-running workers" << endl
        << "  - gcloud  Executes the jobs on Google Cloud Functions" << endl
+       << "  - ycloud  Executes the jobs on Yandex Cloud Functions" << endl
        << endl
        << "Environment variables:" << endl
        << "  - " << FORCE_NO_STATUS << endl
