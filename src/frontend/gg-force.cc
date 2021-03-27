@@ -11,6 +11,7 @@
 
 #include "execution/reductor.hh"
 #include "net/s3.hh"
+#include "net/ycloud.hh"
 #include "storage/backend_local.hh"
 #include "storage/backend_s3.hh"
 #include "thunk/ggutils.hh"
@@ -23,6 +24,7 @@
 #include "execution/engine_gg.hh"
 #include "execution/engine_meow.hh"
 #include "execution/engine_gcloud.hh"
+#include "execution/engine_ycloud.hh"
 #include "tui/status_bar.hh"
 #include "util/digest.hh"
 #include "util/exception.hh"
@@ -143,6 +145,9 @@ unique_ptr<ExecutionEngine> make_execution_engine( const EngineInfo & engine )
   else if ( engine_name == "gcloud" ) {
     return make_unique<GCFExecutionEngine>( max_jobs,
       safe_getenv("GG_GCLOUD_FUNCTION") );
+  }
+  else if (engine_name == "ycloud"){
+     return make_unique<YandexExecutionEngine>(max_jobs, YCloudCredentials());
   }
   else {
     throw runtime_error( "unknown execution engine" );

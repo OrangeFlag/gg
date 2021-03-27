@@ -5,6 +5,7 @@
 
 #include <unordered_map>
 #include <chrono>
+#include <utility>
 
 #include "engine.hh"
 #include "thunk/thunk.hh"
@@ -14,14 +15,18 @@
 
 class YandexExecutionEngine : public ExecutionEngine {
 private:
+    YCloudCredentials credentials_;
     size_t running_jobs_{0};
     std::map<uint64_t, std::chrono::steady_clock::time_point> start_times_{};
 
     HTTPRequest generate_request(const gg::thunk::Thunk &thunk);
-public:
-    YandexExecutionEngine(const size_t max_jobs, const YCloudCredentials &credentials);
 
-    void init(ExecutionLoop &loop) override;
+    static float compute_cost(const std::chrono::steady_clock::time_point &begin,
+                              const std::chrono::steady_clock::time_point &end = std::chrono::steady_clock::now());
+public:
+    YandexExecutionEngine(const size_t max_jobs, YCloudCredentials credentials) :
+            ExecutionEngine(max_jobs),
+            credentials_(std::move(credentials)) {};
 
     void force_thunk(const gg::thunk::Thunk &thunk,
                      ExecutionLoop &exec_loop) override;

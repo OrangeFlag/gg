@@ -20,7 +20,7 @@ private:
 public:
     YCloudCredentials();
 
-    explicit YCloudCredentials(std::string folder = {}, const std::string &iam_token = {},
+    explicit YCloudCredentials(std::string folder, const std::string &iam_token = {},
                                const std::string &api_key = {});
 
     const std::string &folder() const { return folder_; }
