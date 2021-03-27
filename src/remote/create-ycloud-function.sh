@@ -6,7 +6,7 @@ MEMORY=128m
 TIMEOUT=300s
 
 cp common/{common,ggpaths}.py ${FUNCTION_PATH}
-cp $(which gg-execute-static) ${FUNCTION_PATH}
+cp "$(which gg-execute-static)" ${FUNCTION_PATH}
 
 zip ${FUNCTION_PATH}/source.zip ${FUNCTION_PATH}/*
 
