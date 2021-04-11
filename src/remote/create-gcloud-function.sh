@@ -12,7 +12,7 @@ cp $(which gg-execute-static) ${FUNCTION_PATH}
 gcloud beta functions deploy --region=${REGION} --memory ${MEMORY} ${FUNCTION_NAME} --trigger-http --quiet --runtime=python37 --source=${FUNCTION_PATH} --timeout=${TIMEOUT} --format=json
 
 rm ${FUNCTION_PATH}/{common,ggpaths}.py
-rm ${FUNCTION_PATH}/gcreate-gcloud-function.shg-execute-static
+rm ${FUNCTION_PATH}/gg-execute-static
 
 echo
 echo "export GG_GCLOUD_FUNCTION=[https-trigger-url]"
