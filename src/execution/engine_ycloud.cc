@@ -20,13 +20,24 @@ using namespace gg::thunk;
 
 
 HTTPRequest YandexExecutionEngine::generate_request(const Thunk &thunk) {
-    //TODO
+    const string payload = Thunk::execution_payload(thunk);
+
+    HTTPRequest req;
+    req.set_first_line("POST https://functions.yandexcloud.net/" + function_id_ + " HTTP/1.1");
+    req.add_header(HTTPHeader{"Content-Length", to_string(payload.length())});
+    req.add_header(HTTPHeader{"Content-Type", "application/json"});
+    req.done_with_headers();
+
+    req.read_in_body(payload);
+    assert(req.state() == COMPLETE);
+
+    return req;
 }
 
 void YandexExecutionEngine::force_thunk(const Thunk &thunk, ExecutionLoop &exec_loop) {
     HTTPRequest request = generate_request(thunk);
 
-    const Address address_ = {};
+    const Address address_ = Address("functions.yandexcloud.net", "https");
     uint64_t connection_id = exec_loop.make_http_request<SSLConnection>(
             thunk.hash(),
             address_,

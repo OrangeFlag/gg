@@ -148,7 +148,7 @@ unique_ptr<ExecutionEngine> make_execution_engine( const EngineInfo & engine )
       safe_getenv("GG_GCLOUD_FUNCTION") );
   }
   else if (engine_name == "ycloud"){
-     return make_unique<YandexExecutionEngine>(max_jobs, YCloudCredentials());
+     return make_unique<YandexExecutionEngine>(max_jobs, YCloudCredentials(), safe_getenv("GG_YCLOUD_FUNCTION"));
   }
   else {
     throw runtime_error( "unknown execution engine" );

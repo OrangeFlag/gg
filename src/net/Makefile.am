@@ -20,4 +20,6 @@ libggnet_a_SOURCES = address.cc address.hh body_parser.hh \
                      s3.hh s3.cc \
                      lambda.hh lambda.cc \
                      redis.hh redis.cc \
-                     gcloud.hh gcloud.cc
+                     gcloud.hh gcloud.cc \
+                     ycloud.hh ycloud.cc \
+                     ycloud_storage.hh ycloud_storage.cc

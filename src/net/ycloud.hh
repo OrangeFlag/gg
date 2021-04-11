@@ -11,6 +11,7 @@
 #include "util/optional.hh"
 #include "util/util.hh"
 
+
 class YCloudCredentials {
 private:
     std::string folder_;
@@ -20,8 +21,8 @@ private:
 public:
     YCloudCredentials();
 
-    explicit YCloudCredentials(std::string folder, const std::string &iam_token = {},
-                               const std::string &api_key = {});
+    YCloudCredentials(const std::string &folder, const std::string &iam_token,
+                      const std::string &api_key);
 
     const std::string &folder() const { return folder_; }
 

@@ -4,8 +4,7 @@
 
 #include <stdexcept>
 #include <utility>
-
-#include "util/util.hh"
+#include <string>
 
 using namespace std;
 
@@ -17,11 +16,12 @@ YCloudCredentials::YCloudCredentials() : YCloudCredentials(safe_getenv(YCLOUD_FO
                                                            safe_getenv(YCLOUD_IAM_TOKEN_ENV),
                                                            safe_getenv(YCLOUD_API_KEY_ENV)) {}
 
-YCloudCredentials::YCloudCredentials(string folder, const string &iam_token, const string &api_key) :
-        folder_(std::move(folder)),
+YCloudCredentials::YCloudCredentials(const string &folder, const string &iam_token,
+                                     const string &api_key) :
+        folder_(folder),
         iam_token_(iam_token.length() > 0, iam_token),
         api_key_(api_key.length() > 0, api_key) {
     if (iam_token_->empty() && api_key_->empty()) {
-        throw runtime_error("Missing Yandex Cloud iam token or api key");
+        throw std::runtime_error("Missing Yandex Cloud iam token or api key");
     }
 }

@@ -16,6 +16,7 @@
 class YandexExecutionEngine : public ExecutionEngine {
 private:
     YCloudCredentials credentials_;
+    const std::string function_id_;
     size_t running_jobs_{0};
     std::map<uint64_t, std::chrono::steady_clock::time_point> start_times_{};
 
@@ -23,15 +24,17 @@ private:
 
     static float compute_cost(const std::chrono::steady_clock::time_point &begin,
                               const std::chrono::steady_clock::time_point &end = std::chrono::steady_clock::now());
+
 public:
-    YandexExecutionEngine(const size_t max_jobs, YCloudCredentials credentials) :
+    YandexExecutionEngine(const size_t max_jobs, const YCloudCredentials &credentials, const std::string &function_id) :
             ExecutionEngine(max_jobs),
-            credentials_(std::move(credentials)) {};
+            credentials_(credentials),
+            function_id_(function_id) {};
 
     void force_thunk(const gg::thunk::Thunk &thunk,
                      ExecutionLoop &exec_loop) override;
 
-    bool is_remote() const override { return true; }
+    bool is_remote() const { return true; }
 
     bool can_execute(const gg::thunk::Thunk &thunk) const override;
 
