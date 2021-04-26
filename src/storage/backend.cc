@@ -10,6 +10,7 @@
 #include "storage/backend_s3.hh"
 #include "storage/backend_gs.hh"
 #include "storage/backend_redis.hh"
+#include "storage/backend_ys.hh"
 #include "thunk/ggutils.hh"
 #include "util/digest.hh"
 #include "util/optional.hh"
@@ -50,6 +51,13 @@ unique_ptr<StorageBackend> StorageBackend::create_backend( const string & uri )
         ? GoogleStorageCredentials { endpoint.username, endpoint.password }
         : GoogleStorageCredentials {},
       endpoint.host );
+  }
+  else if ( endpoint.protocol == "ys" ) {
+      backend = make_unique<YandexStorageBackend>(
+              ( endpoint.username.length() or endpoint.password.length() )
+              ? YandexStorageCredentials { endpoint.username, endpoint.password }
+              : YandexStorageCredentials(),
+              endpoint.host );
   }
   else if ( endpoint.protocol == "redis" ) {
     RedisClientConfig config;
